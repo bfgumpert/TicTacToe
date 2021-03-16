@@ -6,6 +6,8 @@ const gameBoard = (() => {
 })();
 
 const displayController = (() => {
+    let gameOver = false;
+
     const htmlInitialize = () => {
         for (let i = 1; i < 10; i++) {
             const boardSlot = document.createElement("div");
@@ -45,30 +47,37 @@ const displayController = (() => {
 
     const checkWinner = () => {
         const board = gameBoard.boardState;
-        if (board[0] == board[1] == board[2] ||
-            board[3] == board[4] == board[5] ||
-            board[6] == board[7] == board[8] ||
-            board[0] == board[3] == board[6] ||
-            board[1] == board[4] == board[7] ||
-            board[2] == board[5] == board[8] ||
-            board[2] == board[4] == board[6] ||
-            board[0] == board[4] == board[8]) {
-            //set a new variable to gameover...set gameover true then add condition to evenlistner
+        if ((board[0] == board[1] && board[0] == board[2] && board[0].length > 0 && board[1].length > 0 && board[2].length > 0) ||
+            (board[3] == board[4] && board[3] == board[5] && board[3].length > 0 && board[4].length > 0 && board[5].length > 0) ||
+            (board[6] == board[7] && board[6] == board[8] && board[6].length > 0 && board[7].length > 0 && board[8].length > 0) ||
+            (board[0] == board[3] && board[0] == board[6] && board[0].length > 0 && board[3].length > 0 && board[6].length > 0) ||
+            (board[1] == board[4] && board[1] == board[7] && board[1].length > 0 && board[4].length > 0 && board[7].length > 0) ||
+            (board[2] == board[5] && board[2] == board[8] && board[2].length > 0 && board[5].length > 0 && board[8].length > 0) ||
+            (board[2] == board[4] && board[2] == board[6] && board[2].length > 0 && board[4].length > 0 && board[6].length > 0) ||
+            (board[0] == board[4] && board[0] == board[8] && board[0].length > 0 && board[4].length > 0 && board[8].length > 0)) {
+            gameOver = true;
         }
+        else if (board[0].length > 0 && board[1].length > 0 && board[2].length > 0 &&
+            board[3].length > 0 && board[4].length > 0 && board[5].length > 0 &&
+            board[6].length > 0 && board[7].length > 0 && board[8].length > 0) {
+            //tie
+        }
+
     }
 
     const addGameMarkEvent = () => {
         for (let i = 1; i < 10; i++) {
             const slotNumber = document.getElementById("Slot" + i);
             slotNumber.addEventListener("click", () => {
-                if (playerCircle.checkActive() && slotNumber.textContent == "") {
+                if (playerCircle.checkActive() && slotNumber.textContent == "" && !gameOver) {
                     gameBoard.boardState[slotNumber.id.slice(-1) - 1] = "O";
                 }
-                else if (playerCross.checkActive() && slotNumber.textContent == "") {
+                else if (playerCross.checkActive() && slotNumber.textContent == "" && !gameOver) {
                     gameBoard.boardState[slotNumber.id.slice(-1) - 1] = "X";
                 }
                 displayGameBoard();
                 changeActivePlayer(playerCross, playerCircle);
+                checkWinner();
             })
         }
     }
