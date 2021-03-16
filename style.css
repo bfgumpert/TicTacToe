@@ -1,0 +1,19 @@
+#container {
+    display: grid;
+    height: 1000px;
+    width: 1000px;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    /*grid:
+    'Slot1 Slot2 Slot3'
+    'Slot4 Slot5 Slot6'
+    'Slot7 Slot8 Slot9';*/
+}
+
+.boardSlot {
+    display: flex;
+    border: black solid 5px;
+    font-size: xx-large;
+    justify-content: center;
+    align-items: center;
+}
